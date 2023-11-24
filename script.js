@@ -25,18 +25,21 @@ qrInput.addEventListener("keyup", () => {
 
 
 
+
 document.getElementById("downloadBtn").addEventListener("click", function () {
-  var canvas = document.getElementsByTagName("canvas")[0];
-  var qrCodeUrl = canvas.toDataURL("image/png"); // Keep the MIME type as 'image/png'
+    var qrImageElement = document.getElementById("qrImage");
+    var qrCodeUrl = qrImageElement.src;
 
-  var link = document.createElement("a");
-  link.href = qrCodeUrl;
-  link.download = "qrcode.png";
-
-  // Append the link to the document body before clicking it
-  document.body.appendChild(link);
-  link.click();
-
-  // Clean up by removing the link from the document body
-  document.body.removeChild(link);
+    // Check if the QR code image source exists
+    if (qrCodeUrl.trim() !== '') {
+        var link = document.createElement("a");
+        link.href = qrCodeUrl;
+        link.download = "qrcode.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        alert("Please generate the QR code first.");
+    }
 });
+
